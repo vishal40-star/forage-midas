@@ -1,14 +1,10 @@
 package com.jpmc.midascore.foundation;
 
-public class Balance {
+public class Incentive {
 
     private float amount;
 
-    public Balance() {
-    }
-
-    public Balance(float amount) {
-        this.amount = amount;
+    public Incentive() {
     }
 
     public float getAmount() {

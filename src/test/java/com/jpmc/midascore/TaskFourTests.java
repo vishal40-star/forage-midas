@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
+import com.jpmc.midascore.BalanceQuerier;
+import com.jpmc.midascore.component.KafkaProducer;
+import com.jpmc.midascore.foundation.Balance;
 
-@SpringBootTest
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT
+)
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 public class TaskFourTests {
@@ -22,6 +27,8 @@ public class TaskFourTests {
 
     @Autowired
     private FileLoader fileLoader;
+    @Autowired
+private BalanceQuerier balanceQuerier;
 
     @Test
     void task_four_verifier() throws InterruptedException {
@@ -39,6 +46,8 @@ public class TaskFourTests {
         logger.info("use your debugger to find out what wilbur's balance is after all transactions are processed");
         logger.info("kill this test once you find the answer");
         while (true) {
+Balance balance = balanceQuerier.query(9L);
+System.out.println("WILBUR FINAL BALANCE = " + balance.getAmount());
             Thread.sleep(20000);
             logger.info("...");
         }
